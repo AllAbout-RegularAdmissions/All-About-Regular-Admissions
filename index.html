@@ -6,7 +6,7 @@
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      max-width: 700px;
+      max-width: 900px;
       margin: 40px auto;
       padding: 0 16px;
       line-height: 1.5;
@@ -90,6 +90,35 @@
       color: #6b7280;
       margin-bottom: 8px;
     }
+
+    /* 표 스타일 */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 24px;
+    }
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 6px 8px;
+      font-size: 13px;
+      text-align: center;
+    }
+    th {
+      background: #f3f4f6;
+      font-weight: 600;
+    }
+    .gun-title {
+      font-weight: 700;
+      margin-top: 12px;
+      margin-bottom: 6px;
+    }
+    .track-title {
+      font-weight: 600;
+      margin: 10px 0 4px 0;
+    }
+    .gun-table {
+      display: none; /* JS로 제어 */
+    }
   </style>
 </head>
 <body>
@@ -120,7 +149,7 @@
     </p>
   </div>
 
-  <!-- 실제 Q&A 내용 카드 -->
+  <!-- 실제 Q&A + 표 내용 카드 -->
   <div id="content-card" class="card" style="display:none;">
     <div class="tag">입시 Q&A</div>
     <h1>입시에서 꼭 짚어야 할 핵심 질문들</h1>
@@ -143,1152 +172,242 @@
 
     <hr style="margin:24px 0;" />
 
-    <!-- ✅ 대학 필터 섹션 -->
-    <section id="univ-search-section">
-      <h2>대학 점핑 계열별 보기</h2>
+    <!-- ✅ 군 선택 + 표 섹션 -->
+    <section id="univ-table-section">
+      <h2>군별 대학 점핑 표 보기</h2>
       <p class="info">
-        상위 계열(메디컬 / 일반 학과 / 교대)을 선택하고,<br />
-        필요하면 군(가/나/다)과 세부 계열까지 선택해 보세요.
+        가군 / 나군 / 다군 중 하나를 선택하면, 해당 군의 표가 아래에 나타납니다.<br />
+        표 안에서 문과 / 이과 구분을 함께 볼 수 있습니다.
       </p>
 
-      <!-- 상위 계열 필터 -->
-      <div id="univ-filter-group" style="margin-bottom: 8px;">
-        <button type="button" class="btn-filter active" data-group="all">전체</button>
-        <button type="button" class="btn-filter" data-group="general">일반 학과</button>
-        <button type="button" class="btn-filter" data-group="medical">메디컬</button>
-        <button type="button" class="btn-filter" data-group="teacher">교대 계열</button>
-      </div>
-
-      <!-- 군 필터 -->
-      <div id="gun-filters" style="margin-bottom: 8px;">
-        <p class="info" style="margin-top:4px; margin-bottom:4px;">※ 모집 군 선택</p>
-        <button type="button" class="btn-filter active" data-gun="all">전체</button>
-        <button type="button" class="btn-filter" data-gun="가군">가군</button>
+      <!-- 군 선택 버튼 -->
+      <div id="gun-filters" style="margin-bottom: 12px;">
+        <button type="button" class="btn-filter active" data-gun="가군">가군</button>
         <button type="button" class="btn-filter" data-gun="나군">나군</button>
         <button type="button" class="btn-filter" data-gun="다군">다군</button>
       </div>
 
-      <!-- 일반 학과 세부 필터 -->
-      <div id="general-subfilters" style="margin-bottom: 8px; display:none;">
-        <p class="info" style="margin-top:4px; margin-bottom:4px;">※ 일반 학과 계열 선택</p>
-        <button type="button" class="btn-filter active" data-general="all">전체</button>
-        <button type="button" class="btn-filter" data-general="문과">문과</button>
-        <button type="button" class="btn-filter" data-general="이과">이과</button>
-        <button type="button" class="btn-filter" data-general="통합">통합</button>
+      <!-- 가군 표 -->
+      <div class="gun-table" data-gun-table="가군">
+        <div class="gun-title">[가군]</div>
+
+        <div class="track-title">문과</div>
+        <table>
+          <thead>
+            <tr>
+              <th>대학명 / 전형</th>
+              <th>계열</th>
+              <th>점핑 수치</th>
+              <th>비고</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 👉 여기부터 가군/문과 데이터 행 추가 -->
+            <tr>
+              <td>고려대</td>
+              <td>문과</td>
+              <td>2.1</td>
+              <td>예시</td>
+            </tr>
+            <tr>
+              <td>고려대 (교과)</td>
+              <td>문과</td>
+              <td>2.4</td>
+              <td>예시</td>
+            </tr>
+            <tr>
+              <td>시립대</td>
+              <td>문과</td>
+              <td>1.4</td>
+              <td>예시</td>
+            </tr>
+            <!-- ⬆ 여기까지는 예시, 실제 데이터로 덮어쓰기 -->
+          </tbody>
+        </table>
+
+        <div class="track-title">이과</div>
+        <table>
+          <thead>
+            <tr>
+              <th>대학명 / 전형</th>
+              <th>계열</th>
+              <th>점핑 수치</th>
+              <th>비고</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 👉 여기부터 가군/이과 데이터 행 추가 -->
+            <tr>
+              <td>고</td>
+              <td>이과</td>
+              <td>2.0</td>
+              <td>예시</td>
+            </tr>
+            <tr>
+              <td>고(교과)</td>
+              <td>이과</td>
+              <td>1.9</td>
+              <td>예시</td>
+            </tr>
+            <tr>
+              <td>연고대형과(50명 이상)</td>
+              <td>이과</td>
+              <td>2.2</td>
+              <td>예시</td>
+            </tr>
+            <!-- ⬆ 실제 데이터로 교체 -->
+          </tbody>
+        </table>
       </div>
 
-      <!-- 메디컬 세부 필터 -->
-      <div id="medical-subfilters" style="margin-bottom: 12px; display:none;">
-        <p class="info" style="margin-top:4px; margin-bottom:4px;">※ 메디컬 세부분류 선택</p>
-        <button type="button" class="btn-filter active" data-med="all">메디컬 전체</button>
-        <button type="button" class="btn-filter" data-med="의대">의대</button>
-        <button type="button" class="btn-filter" data-med="치대">치대</button>
-        <button type="button" class="btn-filter" data-med="한의대">한의대</button>
-        <button type="button" class="btn-filter" data-med="수의대">수의대</button>
-        <button type="button" class="btn-filter" data-med="약대">약대</button>
+      <!-- 나군 표 -->
+      <div class="gun-table" data-gun-table="나군">
+        <div class="gun-title">[나군]</div>
+
+        <div class="track-title">문과</div>
+        <table>
+          <thead>
+            <tr>
+              <th>대학명 / 전형</th>
+              <th>계열</th>
+              <th>점핑 수치</th>
+              <th>비고</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 👉 여기부터 나군/문과 데이터 행 추가 -->
+            <tr>
+              <td>서울대 지균</td>
+              <td>문과</td>
+              <td>2.3</td>
+              <td>예시</td>
+            </tr>
+            <tr>
+              <td>서울대 일반</td>
+              <td>문과</td>
+              <td>2.3</td>
+              <td>예시</td>
+            </tr>
+            <tr>
+              <td>이화여자 대형</td>
+              <td>문과</td>
+              <td>1.54</td>
+              <td>예시</td>
+            </tr>
+            <!-- ⬆ 실제 데이터로 교체 -->
+          </tbody>
+        </table>
+
+        <div class="track-title">이과</div>
+        <table>
+          <thead>
+            <tr>
+              <th>대학명 / 전형</th>
+              <th>계열</th>
+              <th>점핑 수치</th>
+              <th>비고</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 👉 여기부터 나군/이과 데이터 행 추가 -->
+            <tr>
+              <td>서울대 지균</td>
+              <td>이과</td>
+              <td>1.49</td>
+              <td>예시</td>
+            </tr>
+            <tr>
+              <td>서울대 일반</td>
+              <td>이과</td>
+              <td>2.6</td>
+              <td>예시</td>
+            </tr>
+            <tr>
+              <td>시립대</td>
+              <td>이과</td>
+              <td>1.45</td>
+              <td>예시</td>
+            </tr>
+            <!-- ⬆ 실제 데이터로 교체 -->
+          </tbody>
+        </table>
       </div>
 
-      <div id="univ-results"></div>
+      <!-- 다군 표 (초기 예시만, 필요에 따라 채우기) -->
+      <div class="gun-table" data-gun-table="다군">
+        <div class="gun-title">[다군]</div>
+
+        <div class="track-title">문과</div>
+        <table>
+          <thead>
+            <tr>
+              <th>대학명 / 전형</th>
+              <th>계열</th>
+              <th>점핑 수치</th>
+              <th>비고</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 👉 다군/문과 데이터가 있다면 여기에 추가 -->
+            <tr>
+              <td>예시대학 다군 문과</td>
+              <td>문과</td>
+              <td>2.0</td>
+              <td>예시</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="track-title">이과</div>
+        <table>
+          <thead>
+            <tr>
+              <th>대학명 / 전형</th>
+              <th>계열</th>
+              <th>점핑 수치</th>
+              <th>비고</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 👉 다군/이과 데이터가 있다면 여기에 추가 -->
+            <tr>
+              <td>예시대학 다군 이과</td>
+              <td>이과</td>
+              <td>1.8</td>
+              <td>예시</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
   </div>
 
   <script>
-    // 1) 대학 데이터 (네가 준 가/나군 데이터 정리)
-    const UNIVERSITY_DATA = [
-      {
-        name: "고려대",
-        category: "일반",
-        medDetail: "",
-        track: "문과",
-        gun: "가군",
-        number: "2.1"
-      },
-      {
-        name: "고려대 (교과)",
-        category: "일반",
-        medDetail: "",
-        track: "문과",
-        gun: "가군",
-        number: "2.4"
-      },
-      {
-        name: "시립대",
-        category: "일반",
-        medDetail: "",
-        track: "문과",
-        gun: "가군",
-        number: "1.4"
-      },
-
-      {
-        name: "연세 의예",
-        category: "메디컬",
-        medDetail: "의대",
-        track: "",
-        gun: "가군",
-        number: "1.5"
-      },
-      {
-        name: "연세 치의예",
-        category: "메디컬",
-        medDetail: "치대",
-        track: "",
-        gun: "가군",
-        number: "1.5"
-      },
-      {
-        name: "고려 의",
-        category: "메디컬",
-        medDetail: "의대",
-        track: "",
-        gun: "가군",
-        number: "1.7"
-      },
-      {
-        name: "연세 약",
-        category: "메디컬",
-        medDetail: "약대",
-        track: "",
-        gun: "가군",
-        number: "2"
-      },
-      {
-        name: "건국 수",
-        category: "메디컬",
-        medDetail: "수의대",
-        track: "",
-        gun: "가군",
-        number: "1.4"
-      },
-
-      {
-        name: "고",
-        category: "일반",
-        medDetail: "",
-        track: "이과",
-        gun: "가군",
-        number: "2"
-      },
-      {
-        name: "고(교과)",
-        category: "일반",
-        medDetail: "",
-        track: "이과",
-        gun: "가군",
-        number: "1.9"
-      },
-      {
-        name: "연고대형과(50명이상)",
-        category: "일반",
-        medDetail: "",
-        track: "이과",
-        gun: "가군",
-        number: "2.2"
-      },
-      {
-        name: "이",
-        category: "일반",
-        medDetail: "",
-        track: "이과",
-        gun: "가군",
-        number: "1.9"
-      },
-      {
-        name: "시",
-        category: "일반",
-        medDetail: "",
-        track: "이과",
-        gun: "가군",
-        number: "1.5"
-      },
-      {
-        name: "건대형과(50명 이상-자전,전기)",
-        category: "일반",
-        medDetail: "",
-        track: "이과",
-        gun: "가군",
-        number: "1.7"
-      },
-
-      {
-        name: "건(문이)",
-        category: "일반",
-        medDetail: "",
-        track: "통합",
-        gun: "가군",
-        number: "1.6"
-      },
-      {
-        name: "연(문이)",
-        category: "일반",
-        medDetail: "",
-        track: "통합",
-        gun: "가군",
-        number: "2.3"
-      },
-
-      {
-        name: "서울대 지균",
-        category: "일반",
-        medDetail: "",
-        track: "문과",
-        gun: "나군",
-        number: "2.3"
-      },
-      {
-        name: "서울대 일반",
-        category: "일반",
-        medDetail: "",
-        track: "문과",
-        gun: "나군",
-        number: "2.3"
-      },
-      {
-        name: "서울대 대형",
-        category: "일반",
-        medDetail: "",
-        track: "문과",
-        gun: "나군",
-        number: "2.1"
-      },
-      {
-        name: "이화여자 대형",
-        category: "일반",
-        medDetail: "",
-        track: "문과",
-        gun: "나군",
-        number: "1.54"
-      },
-      {
-        name: "시립대",
-        category: "일반",
-        medDetail: "",
-        track: "문과",
-        gun: "나군",
-        number: "1.5"
-      },
-
-      {
-        name: "서울대 지균",
-        category: "일반",
-        medDetail: "",
-        track: "이과",
-        gun: "나군",
-        number: "1.49"
-      },
-      {
-        name: "서울대 일반",
-        category: "일반",
-        medDetail: "",
-        track: "이과",
-        gun: "나군",
-        number: "2.6"
-      },
-      {
-        name: "시립대",
-        category: "일반",
-        medDetail: "",
-        track: "이과",
-        gun: "나군",
-        number: "1.45"
-      },
-      {
-        name: "서울대 의",
-        category: "메디컬",
-        medDetail: "의대",
-        track: "",
-        gun: "나군",
-        number: "1.2"
-      },
-      {
-        name: "이대 의",
-        category: "메디컬",
-        medDetail: "의대",
-        track: "",
-        gun: "나군",
-        number: "1.36"
-      },
-      {
-        name: "서울대 치",
-        category: "메디컬",
-        medDetail: "치대",
-        track: "",
-        gun: "나군",
-        number: "1.5"
-      },
-      {
-        name: "서울대 약",
-        category: "메디컬",
-        medDetail: "약대",
-        track: "",
-        gun: "나군",
-        number: "1.5"
-      },
-      {
-        name: "서울대 수",
-        category: "메디컬",
-        medDetail: "수의대",
-        track: "",
-        gun: "나군",
-        number: "1.5"
-      },
-      {
-        name: "이대 미산약/약학",
-        category: "메디컬",
-        medDetail: "약대",
-        track: "",
-        gun: "나군",
-        number: "1.54"
-      },
-
-      {
-        name: "이화여자(문이)",
-        category: "일반",
-        medDetail: "",
-        track: "통합",
-        gun: "나군",
-        number: "1.87"
-      },
-      {
-        name: "건국대 (문이)",
-        category: "일반",
-        medDetail: "",
-        track: "통합",
-        gun: "나군",
-        number: "1.83"
-      },
-      {
-        name: "서울대 대형",
-        category: "일반",
-        medDetail: "",
-        track: "통합",
-        gun: "나군",
-        number: "2"
-      }
-    ];
-
-    // 2) 허용 이메일 목록 (여기만 네 리스트로 교체하면 됨)
+    // ===== 1) 허용 이메일 목록 (실제 이메일로 교체해서 사용) =====
     const ALLOWED_EMAILS = [
-  "what2z@naver.com",
-  "avushen@naver.com",
-  "sj730426@naver.com",
-  "nexty@naver.com",
-  "leeundersky@naver.com",
-  "juststop06@naver.com",
-  "lovelyjinny@hanmail.net",
-  "mikim79@naver.com",
-  "rabokki@naver.com",
-  "jsy30245jsy@naver.com",
-  "byury777@naver.com",
-  "jhkimmd@naver.com",
-  "eazee@naver.com",
-  "hyungtae7@naver.com",
-  "happynco_7@naver.com",
-  "face_book@naver.com",
-  "rabbitksh@naver.com",
-  "wnslaka777@gmail.com",
-  "fullmoon96@hanmil.net",
-  "harry0415@naver.com",
-  "ppo0333@naver.com",
-  "camelred@naver.com",
-  "choongkyun.kim@gmail.com",
-  "heavens99@naver.com",
-  "magazines@naver.com",
-  "shee47@daum.net",
-  "ninakiki@naver.com",
-  "susimin71@naver.com",
-  "elmok@naver.com",
-  "rizlim@naver.com",
-  "giyoonlee76@naver.com",
-  "yang7470@naver.com",
-  "elsung2006@gmail.com",
-  "letterjiyoung@hanmmail.net",
-  "october9876@naver.com",
-  "icepice@naver.com",
-  "joajoy7@naver.com",
-  "kasiko77@naver.com",
-  "coflal3275@naver.com",
-  "garden7374@naver.com",
-  "sono611@naver.com",
-  "shin7139@naver.com",
-  "alin79121@naver.com",
-  "9254ksy@naver.com",
-  "toypoodle77@naver.com",
-  "latat@naver.com",
-  "totoro_mei@naver.com",
-  "jennycyber@naver.com",
-  "hongwa97@naver.com",
-  "jsma73@naver.com",
-  "501kwon@naver.com",
-  "autumnscent@naver.com",
-  "imagewon@naver.com",
-  "gentlesky87@naver.com",
-  "jjjeeecho2015@naver.com",
-  "lany3@naver.com",
-  "luvsian@naver.com",
-  "songyc06@naver.com",
-  "dnjscks2007@gmail.com",
-  "circlekim77@naver.com",
-  "cpjkyy@gmail.com",
-  "miafromwestmount@naver.com",
-  "junu1973@naver.com",
-  "peachcream12@naver.com",
-  "leigh020202@gmail.com",
-  "hongt0322@gmail.com",
-  "ccoldfish@naver.com",
-  "nayoung_park@naver.com",
-  "ellie-ahn@naver.com",
-  "sazaking001@naver.com",
-  "heki78@naver.com",
-  "spinelily@naver.com",
-  "sour33@naver.com",
-  "jhee38317@naver.com",
-  "ounew@naver.com",
-  "anespresso@naver.com",
-  "bwyu0599@naver.com",
-  "jangminhee76@naver.com",
-  "mili260@naver.com",
-  "mkgene1@naver.com",
-  "hanjooy100@naver.com",
-  "na2151@naver.com",
-  "mjyoon5354@naver.com",
-  "sangsa97@naver.com",
-  "desree@naver.com",
-  "blesseun43@naver.com",
-  "jhlikeo2@naver.com",
-  "miko0704@naver.com",
-  "eychang@naver.com",
-  "ruaths902@naver.com",
-  "leenlim@naver.com",
-  "kke9409@naver.com",
-  "mine025@naver.com",
-  "ysoo828@naver.com",
-  "tukas@naver.com",
-  "km038200@naver.com",
-  "pigfoxjk@naver.com",
-  "snowgoofy@naver.com",
-  "send2jh@naver.com",
-  "csm923@naver.com",
-  "kleesk@naver.com",
-  "yjhan0407@naver.com",
-  "herbkey@naver.com",
-  "wej77@naver.com",
-  "leejiminmong@naver.com",
-  "lkw0815@naver.com",
-  "plaxton@naver.com",
-  "odry0922@naver.com",
-  "raylim0803@gmail.com",
-  "jinwoon73@naver.com",
-  "silvia1208@naver.com",
-  "jks2304@hanmail.net",
-  "fpwlsk92@naver.com",
-  "cej122@gmail.com",
-  "wksoso@naver.com",
-  "glassy96@naver.com",
-  "isabellediamond6@naver.com",
-  "jrmoph@naver.com",
-  "dkqlszhfldk@naver.com",
-  "papaya1104@naver.com",
-  "sunhwa.kim@here.com",
-  "dalcot@naver.com",
-  "honey9370@naver.com",
-  "engine_idle@naver.com",
-  "leejeesun79@naver.com",
-  "jwrs0704@naver.com",
-  "proalu@naver.com",
-  "hyunjooahn@naver.com",
-  "annajoe0416@naver.com",
-  "bono0529@naver.com",
-  "hkwook78@naver.com",
-  "z233078@naver.com",
-  "airbunny@naver.com",
-  "nwry207@naver.com",
-  "dddinggri@naver.com",
-  "chri1219@naver.com",
-  "cecil1129@hanmail.net",
-  "munii-k@hanmail.net",
-  "heasuya@naver.com",
-  "fascio76@naver.com",
-  "egglove96@naver.com",
-  "hwangsw0404@naver.com",
-  "shjb08@naver.com",
-  "rachel_inha@naver.com",
-  "cake1230@hanmail.net",
-  "synim44@naver.com",
-  "k0dy813@naver.com",
-  "cinoo1004@naver.com",
-  "sncian@naver.com",
-  "jongslee2@naver.com",
-  "hyewon3123@naver.com",
-  "star07071@naver.com",
-  "hgmpj@naver.com",
-  "mariach9@naver.com",
-  "zzinda70@naver.com",
-  "0619jsh@naver.com",
-  "ingstar002@naver.com",
-  "durankr@naver.com",
-  "h03054@naver.com",
-  "nicepiao@naver.com",
-  "nicemwkim@naver.com",
-  "multisoo@naver.com",
-  "khl740406@naver.com",
-  "wlstntl@daum.net",
-  "meaganjung@naver.com",
-  "gsurgery@naver.com",
-  "rosella72@naver.com",
-  "smjms77@naver.com",
-  "lixijing@naver.com",
-  "lovpsyche@naver.com",
-  "hojonghojong@naver.com",
-  "kikik2001@naver.com",
-  "funny7896@naver.com",
-  "novio97@naver.com",
-  "son1137@naver.com",
-  "hema0320@naver.com",
-  "robin28@naver.com",
-  "dazzlingsunn@naver.com",
-  "yks7329@naver.com",
-  "sarasa93@naver.com",
-  "hyunjoo22@naver.com",
-  "narcii@naver.com",
-  "yiche7@naver.com",
-  "fly5027@naver.com",
-  "lucia105@naver.com",
-  "cool628@naver.com",
-  "ninano90@naver.com",
-  "90ninano@gmail.com",
-  "jjpark1107@naver.com",
-  "stb21@naver.com",
-  "stat@netsgo.com",
-  "jsmoon1010@naver.com",
-  "ada765@naver.com",
-  "breg2@naver.com",
-  "ccosime@naver.com",
-  "ahtsksl74@naver.com",
-  "bigcloud1@naver.com",
-  "irony123@naver.com",
-  "qway77@naver.com",
-  "csunkim@naver.com",
-  "raykira@naver.com",
-  "khuija@naver.com",
-  "piglet_97@naver.com",
-  "tunovia@naver.com",
-  "dockang@hotmail.com",
-  "smileyjh76@naver.com",
-  "kiminns@naver.com",
-  "gylee0716@daum.net",
-  "vaccine02@naver.com",
-  "songheon5252@gmail.com",
-  "yamm326@naver.com",
-  "heyojh@naver.com",
-  "uni10@naver.com",
-  "yhlee7612@naver.com",
-  "jewlsunny@naver.com",
-  "molyu0617@naver.com",
-  "chjchris@naver.com",
-  "tjsarang77@naver.com",
-  "geonhui1103@gmail.com",
-  "hycamtin@naver.com",
-  "indiangard@naver.com",
-  "applelse2007@naver.com",
-  "jinhui1106@naver.com",
-  "jinhui.korea@gmail.com",
-  "juliarho@naver.com",
-  "alarm520@naver.com",
-  "neige12@naver.com",
-  "yoicom@naver.com",
-  "nakcleo@naver.com",
-  "ninon1966@naver.com",
-  "kimji129@naver.com",
-  "giokkim@naver.com",
-  "shinso7@naver.com",
-  "ddol0423@naver.com",
-  "jisugy@naver.com",
-  "refalive@naver.com",
-  "minirene@naver.com",
-  "esk1978@naver.com",
-  "ojever@naver.com",
-  "cooljam76@naver.com",
-  "paspark@naver.com",
-  "serenity2@naver.com",
-  "wonderbigi@naver.com",
-  "shkimkorea@gmail.com",
-  "hwan04255@naver.com",
-  "benigncks@naver.com",
-  "herbj21@naver.com",
-  "anaisgio@naver.com",
-  "dalknsiasia@naver.com",
-  "kingson75@naver.com",
-  "ttochi50@naver.com",
-  "sa3568@naver.com",
-  "womanc1@naver.com",
-  "biorobots@naver.com",
-  "clarena@naver.com",
-  "gyum1110@naver.com",
-  "haroo59@naver.com",
-  "skyalaa@naver.com",
-  "kjh35851616@gmail.com",
-  "homom69@naver.com",
-  "glassnam@naver.com",
-  "1204dawy@naver.com",
-  "inilove76@naver.com",
-  "helen1010@naver.com",
-  "transpare@naver.com",
-  "ju_park@naver.com",
-  "ksrq411@naver.com",
-  "h10s7d8@naver.com",
-  "ssblues@naver.com",
-  "jeshialee@naver.com",
-  "aska206@naver.com",
-  "chl1105@naver.com",
-  "daipual@naver.com",
-  "kyungakoo@naver.com",
-  "bulbus11@naver.com",
-  "sukheeme@naver.com",
-  "enoughmam@naver.com",
-  "yisimgok@naver.com",
-  "hjlim6748@naver.com",
-  "skang1004@naver.com",
-  "ohjulya@naver.com",
-  "wooda78@naver.com",
-  "wooda1978@gmail.com",
-  "shalla@naver.com",
-  "polon9907@naver.com",
-  "chungonlee@naver.com",
-  "choseung7@naver.com",
-  "hook7408@naver.com",
-  "jun7741@naver.com",
-  "vaanime@naver.com",
-  "oliang@naver.com",
-  "70july@naver.com",
-  "oniongl@naver.com",
-  "stsh1052@naver.com",
-  "inijung77@naver.com",
-  "jong0200@naver.com",
-  "jiyeahong76@naver.com",
-  "ishsunny@naver.com",
-  "kandyce@naver.com",
-  "demencia@naver.com",
-  "muraji78@naver.com",
-  "heyok76@naver.com",
-  "mansong@naver.com",
-  "arrisu1052@naver.com",
-  "design2kr@naver.com",
-  "energetic0@naver.com",
-  "yiyagi1@naver.com",
-  "jiyuns77@naver.com",
-  "sunni82@naver.com",
-  "xiuding@naver.com",
-  "zzz2390@naver.com",
-  "1345ay@naver.com",
-  "kikik2001@naver.com",
-  "nayeonkim0615@naver.com",
-  "porcelaine@naver.com",
-  "loveaji99@naver.com",
-  "nicer80@naver.com",
-  "junho6959@naver.com",
-  "dreamif@naver.com",
-  "surprize@naver.com",
-  "hobbanggirl12@naver.com",
-  "stei23@naver.com",
-  "cabaretqueen@naver.com",
-  "jaewonny0407@gmail.com",
-  "fean002@naver.com",
-  "keunahkim72@naver.com",
-  "heatheryeon@naver.com",
-  "sophieyoha@naver.com",
-  "mizzi75@naver.com",
-  "jioioi@naver.com",
-  "katiepark1207@naver.com",
-  "eeva0903@naver.com",
-  "hayaji2@naver.com",
-  "ylem0804@naver.com",
-  "chouchou7@naver.com",
-  "jolie821@naver.com",
-  "jharue1208@naver.com",
-  "elysia11@naver.com",
-  "krkang75@naver.com",
-  "gunsunmam@naver.com",
-  "notaccident@naver.com",
-  "momdads0918@naver.com",
-  "adagio33@naver.com",
-  "alin79121@naver.com",
-  "codeblue8275@gmail.com",
-  "endy1229@naver.com",
-  "skoh61@naver.com",
-  "redcat7179@gamil.com",
-  "nakis0313@naver.com",
-  "ejchoi0307@gmail.com",
-  "custard76@naver.com",
-  "son1137@naver.com",
-  "namiin20@naver.com",
-  "yhj0105@gmail.com",
-  "bubugi4@hanmail.net",
-  "1sthe@naver.com",
-  "hoohoo7433@naver.com",
-  "ajaabp@daum.net",
-  "jsa070501@gmail.com",
-  "mayrock@naver.com",
-  "eugine72@naver.com",
-  "dalgom1@naver.com",
-  "leeem2@naver.com",
-  "pttgirl0126@naver.com",
-  "ohserim@naver.com",
-  "wmseo810@naver.com",
-  "shoho429@gmail.com",
-  "jinny125@naver.com",
-  "euny1018@naver.com",
-  "ginghosi@naver.com",
-  "greenyj@naver.com",
-  "lib0417@naver.com",
-  "na2151@naver.com",
-  "mynickname1@naver.com",
-  "girachi6511@naver.com",
-  "yunica00@naver.com",
-  "lycra2@hanmail.net",
-  "max7082@naver.com",
-  "laurenlee0809@gmail.com",
-  "jungung37@naver.com",
-  "741yuni@naver.com",
-  "hjjwlee@naver.com",
-  "hskim0623@naver.com",
-  "parkjeongyee@gmial.com",
-  "wotjrl310@naver.com",
-  "kke9409@naver.com",
-  "chyjunnyboy@naver.com",
-  "kyunga8163@naver.com",
-  "greentea2804@naver.com",
-  "chloe19@naver.com",
-  "hseseo@gmail.com",
-  "seseo97@naver.com",
-  "nudobamnamu@gmail.com",
-  "kshkelly@naver.com",
-  "rose7047@naver.com",
-  "hje721106@gmail.com",
-  "hje721106@naver.com",
-  "nesss97@naver.com",
-  "kisjin94@gmail.com",
-  "juseok02@naver.com",
-  "jiannyang@gmail.com",
-  "jisugy@naver.com",
-  "winnie0726@naver.com",
-  "luxnlux@naver.com",
-  "esk1978@naver.com",
-  "watermir96@naver.com",
-  "speed3038@naver.com",
-  "purin718@naver.com",
-  "seyoon2007@naver.com",
-  "raylim0803@naver.com",
-  "sooanie@hanmail.net",
-  "hwzzang916@gmail.com",
-  "selfridg@naver.com",
-  "sunhyey@naver.com",
-  "ttochi50@naver.com",
-  "sa3568@naver.com",
-  "honga74@daum.net",
-  "bokdol74@naver.com",
-  "thehelen@naver.com",
-  "ssalbab75@naver.com",
-  "9699love@naver.com",
-  "olive771229@naver.com",
-  "papaya1104@naver.com",
-  "gkdud9399@naver.com",
-  "jujubest97@naver.com",
-  "jbd4619@naver.com",
-  "solomon35@naver.com",
-  "kidinlove@naver.com",
-  "amaeamae@naver.com",
-  "mdm1002@naver.com",
-  "yoonhabae@naver.com",
-  "t970013@naver.com",
-  "purity12k@naver.com",
-  "iriskjs@naver.com",
-  "eunyangg@naver.com",
-  "tonggz@naver.com",
-  "badgoofy@gmail.com",
-  "yhmoon95@gmail.com",
-  "yhmoon95@naver.com",
-  "nanjy2@naver.com",
-  "k269syzz@naver.com",
-  "syjj0906@naver.com",
-  "ljy8280jy@naver.com",
-  "gus153@naver.com",
-  "hsjoo1977@naver.com",
-  "gold9847@naver.com",
-  "0711hm@naver.com",
-  "joy0243@naver.com",
-  "jjeunhyh@naver.com",
-  "vein9696@naver.com",
-  "hshmom04@naver.com",
-  "sooma91@naver.com",
-  "sleepyhead2@naver.com",
-  "eksole@naver.com",
-  "rosetta1024@naver.com",
-  "joy3h@naver.com",
-  "ilaime@naver.com",
-  "belovedchild@daum.net",
-  "hjnkb@naver.com",
-  "cucci27@naver.com",
-  "hpkang@kamlo.or.kr",
-  "songmiya95@naver.com",
-  "jang98121@naver.com",
-  "tasimahal@naver.com",
-  "yjy11361136@naver.com",
-  "gwkwak@naver.com",
-  "dew01222@naver.com",
-  "shable73@naver.com",
-  "mirap76@naver.com",
-  "kku666@naver.com",
-  "rubinaqq@naver.com",
-  "yschakr@naver.com",
-  "jollymonica@naver.com",
-  "pjjongi@naver.com",
-  "dukky0630@naver.com",
-  "kevin825@naver.com",
-  "hjhw07@gmail.com",
-  "khju93@naver.com",
-  "amy905@naver.com",
-  "leekanghee0406@gmail.com",
-  "tigra22@naver.com",
-  "angel91@naver.com",
-  "wonderl31@naver.com",
-  "papillons76@naver.com",
-  "sjkim798@naver.com",
-  "qjqjfloo1@naver.com",
-  "totoro9265@naver.com",
-  "psyche455@naver.com",
-  "haizz@naver.com",
-  "buns0714@naver.com",
-  "lonna0512@gmail.com",
-  "choco_milk-@naver.com",
-  "bleunuit@naver.com",
-  "ruby8179@naver.com",
-  "juns9797@naver.com",
-  "jisun039@naver.com",
-  "suegenne@naver.com",
-  "dsyrhappy@naver.com",
-  "sunokjoy@gmail.com",
-  "suhyun@naver.com",
-  "wonderbow@naver.com",
-  "borisaza92@naver.com",
-  "kowooj@naver.com",
-  "enjoo71@naver.com",
-  "dohee7512@naver.com",
-  "violet7808@naver.com",
-  "ninano90@naver.com",
-  "pigpiga@naver.com",
-  "campapa1@naver.com",
-  "hyopneda@naver.com",
-  "ehjeon1253@gmail.com",
-  "imjinnie@naver.com",
-  "jylee234@naver.com",
-  "cake1230@hanmail.net",
-  "ultrajjeong@naver.com",
-  "katepopo@naver.com",
-  "cityhunted@gmail.com",
-  "cityhunted@kia.com",
-  "poyaking@naver.com",
-  "pigding@naver.com",
-  "happysso2@naver.com",
-  "sulhejo@naver.com",
-  "songyc06@gmail.com",
-  "songyc06@naver.com",
-  "pkgirl99@naver.com",
-  "cwpyun@naver.com",
-  "chelly_1121@naver.com",
-  "hayang923@naver.com",
-  "onyoumin@naver.com",
-  "sykim327@gmail.com",
-  "heydoctor@naver.com",
-  "indi30@naver.com",
-  "9296417@naver.com",
-  "sazaking001@naver.com",
-  "khjung717@naver.com",
-  "yk1964@naver.com",
-  "angela3004@naver.com",
-  "deerpsy@naver.com",
-  "bnmbnm252@naver.com",
-  "kalcrew95@naver.com",
-  "sy48sy48@naver.com",
-  "yellowimp@naver.com",
-  "annahskim@naver.com",
-  "alayun@naver.com",
-  "9750790@naver.com",
-  "suarena@naver.com",
-  "yjh89331@naver.com",
-  "qlog1974@naver.com",
-  "hanjooy100@naver.com",
-  "lemonade5383@naver.com",
-  "aa2277@hanmail.net",
-  "esolee99276@naver.com",
-  "khbstar1@naver.com",
-  "reihee@naver.com",
-  "ejk725@naver.com",
-  "d1f2@naver.com",
-  "indiangard@naver.com",
-  "zzb97@naver.com",
-  "ellie88@naver.com",
-  "amy2416@naver.com",
-  "chowonju94@naver.com",
-  "eunyoung_cho@naver.com",
-  "aishaco@naver.com",
-  "neige12@naver.com",
-  "iris200711@naver.com",
-  "98azure@naver.com",
-  "shcometrue@gmail.com",
-  "wej77@naver.com",
-  "joohyena@naver.com",
-  "96komdori@naver.com",
-  "herbkang@hanmail.net",
-  "sea7896@naver.com",
-  "spark46w@naver.com",
-  "popoberryj@naver.com",
-  "bernice7@naver.com",
-  "gareureung@daum.net",
-  "mhmy11@naver.com",
-  "811clare@naver.com",
-  "keesj73@gmail.com",
-  "shirley8027@naver.com",
-  "jinkim007@naver.com",
-  "sunwook73@naver.com",
-  "mafan@naver.com",
-  "jiyoonk2018@gamail.com",
-  "kristiepark@naver.com",
-  "beautydr@hanmail.net",
-  "githen@hanmail.net",
-  "hsjeon0925@naver.com",
-  "hsjeon0725@naver.com",
-  "jiywith@naver.com",
-  "hrman1@naver.com",
-  "molar1@naver.com",
-  "arie10@naver.com",
-  "fm5427@naver.com",
-  "119lsh@hanmail.net",
-  "jjur96@naver.com",
-  "misup22@naver.com",
-  "timco77@naver.com",
-  "bliss041@naver.com",
-  "ejjegal@naver.com",
-  "nicejudy@naver.com",
-  "haayun74@naver.com",
-  "kyunghee.nam@gmail.com",
-  "oksk12051205@gmail.com",
-  "cy3533@naver.com",
-  "yoonii2010@naver.com",
-  "sophiebarat@naver.com",
-  "06chaeyun03@gmail.com",
-  "chaeyun1@naver.com",
-  "unsak2@naver.com",
-  "siiny94@naver.com",
-  "kittyhj76@naver.com",
-  "ra0513@naver.com",
-  "aromi923@naver.com",
-  "kimprohj@naver.com",
-  "haerae7@naver.com",
-  "cloved@naver.com",
-  "oek436@naver.com",
-  "ydmcm@naver.com",
-  "ockmisun@naver.com",
-  "jjungseung@gmail.com",
-  "gucciya1@naver.com",
-  "msrhie@naver.com",
-  "jinayeu@naver.com",
-  "elf_yoo@naver.com",
-  "yunjeong.jang@gmail.com",
-  "ori96@naver.com",
-  "smhonghj@naver.com",
-  "namheejoo@naver.com",
-  "kwonms0409@naver.com",
-  "ssun0614@naver.com",
-  "lian1050@naver.com",
-  "jungsil2@naver.com",
-  "kimtaeheon0505@naver.com",
-  "tarrytown@naver.com",
-  "carolyn24@naver.com",
-  "grandharu011@naver.com",
-  "falltree040705@naver.com",
-  "wonju7942@naver.com",
-  "momohito@gmail.cpm",
-  "syngprk@gmail.com",
-  "9830464@naver.com",
-  "primesmkim@naver.com",
-  "finkgirl3@naver.com",
-  "mommy3029@naver.com",
-  "jhyun5555@naver.com",
-  "lyaoh@naver.com",
-  "shallala332@naver.com",
-  "suziek4@gmail.cm",
-  "atcocoa@naver.com",
-  "ddili94@naver.com",
-  "soovari@naver.com",
-  "miakim711031@naver.com",
-  "theproto@naver.com",
-  "emilykkimhyen@gmail.com",
-  "crystalbaek0810@naver.com",
-  "eebbenee@naver.com",
-  "sarasa93@naver.com",
-  "semiwhite@naver.com",
-  "hercina55@gmail.com",
-  "hercina5555@naver.com",
-  "mountdew@naver.com",
-  "gangsterfrog@naver.com",
-  "lemonbee7@naver.com",
-  "dreamer5479@naver.com",
-  "point3467@naver.com",
-  "stella0719@naver.com",
-  "happyinfant@naver.com",
-  "97yulli@hanmail.net",
-  "yuni7230@naver.com",
-  "ssoiy@naver.com",
-  "7273asm@naver.com",
-  "020526@naver.com",
-  "teferet1@naver.com",
-  "jarming7@naver.com",
-  "qway77@naver.com",
-  "yeppi2206@naver.com",
-  "youme1996@naver.com",
-  "gucciya123@naver.com",
-  "godls5@naver.com",
-  "gyshin@kitech.ac.kr",
-  "oylee3001@naver.com",
-  "hyejumoon@naver.com",
-  "lucidgreen@naver.com",
-  "heki78@naver.com",
-  "jmy3504@naver.com",
-  "lasik27@naver.com",
-  "jieun_5418@naver.com",
-  "etoile760820@naver.com",
-  "anespresso@naver.com",
-  "mmtsh@naver.com",
-  "jwpark0227@gmail.com",
-  "sy77min@naver.com",
-  "okk590@naver.com",
-  "pumpkin7657@naver.com",
-  "forawmen@naver.com",
-  "ddalglock@naver.com",
-  "wacademy7@naver.com",
-  "ncraig6@naver.com",
-  "onlytaku@gmail.com",
-  "ckhee78@naver.com",
-  "yjm8817@naver.com",
-  "sunmitt@naver.com",
-  "inform98@naver.com",
-  "dolmingi7@naver.com",
-  "anet777@naver.com",
-  "yium0719@naver.com",
-  "hany926@naver.com",
-  "warmmysoltty@naver.com",
-  "53jor@naver.com",
-  "jen0515@naver.com",
-  "osakke76@naver.com",
-  "chomada@naver.com",
-  "angeljihyun001@naver.com",
-  "hrpark1@hanmail.net",
-  "ran0308@naver.com",
-  "eclipse74@naver.com",
-  "violet9507@naver.com",
-  "aramith2000@naver.com",
-  "halmona@naver.com",
-  "cooljam07@naver.com",
-  "piaeno@naver.com",
-  "tjsals604@naver.com",
-  "hahahe20@naver.com",
-  "mypark7502@naver.com",
-  "jw6546@naver.com",
-  "joajoau@naver.com",
-  "kwonsm75@naver.com",
-  "illy2000@naver.com",
-  "gileuno@gmail.com",
-  "kylie7246@naver.com",
-  "herbj21@hanmail.net",
-  "herbj21@naver.com",
-  "cjks2304@naver.com",
-  "eliza70@naver.com",
-  "hiyena0822@gmail.com",
-  "denisaere@naver.com",
-  "hyjeon718@gmail.com",
-  "sunnyhen@naver.com",
-  "jbomine1@naver.com",
-  "jborook@naver.com",
-  "helloeun75@naver.com",
-  "iris297@naver.com",
-  "clarisse0804@naver.com",
-  "kmiryu@naver.com",
-  "mkmancho@naver.com",
-  "seoulcop@naver.com",
-  "parkju3385@naver.com",
-  "hklovesjm@naver.com",
-  "fightingyoun@naver.com",
-  "cjw91dent@naver.com",
-  "sshdbwls@naver.com",
-  "msdocu@naver.com",
-  "jaewoni1223@naver.com",
-  "yeon8060@naver.com",
-  "present008@naver.com",
-  "rene@naver.com",
-  "msneophil@naver.com",
-  "zalkni@naver.com",
-  "mhee93@naver.com",
-  "alskya@naver.com",
-  "hani0525@hanmail.net",
-  "ace8140@naver.com",
-  "hyungki87@hanmail.net",
-  "flairy@naver.com",
-  "malee3743@naver.com",
-  "joon5292006@gmail.com",
-  "yeet123@naver.com",
-  "dbdit@naver.com",
-  "jason2522@naver.com",
-  "kbspd777@naver.com",
-  "kkey0321@naver.com",
-  "wls2cks2@naver.com",
-  "5positive@naver.com",
-  "monde9@naver.com",
-  "vjeunki@naver.com",
-  "nnrraabbiitt@naver.com",
-  "hipcheny@naver.com",
-  "paiksk100@hanmail.net",
-  "jungjunhyung@naver.com",
-  "libo417@naver.com",
-  "lhsook0104@naver.com",
-  "jeain91@naver.com",
-  "seonghyeon1124@naver.com",
-  "min811733@gmail.com",
-  "masteryodal@naver.com",
-  "politeyj@naver.com",
-  "frogmin74@naver.com",
-  "edithjins@gmail.com",
-  "mhnkm@naver.com",  
+      // 예시
+      "test@test.com",
+      "example@example.com"
     ].map(e => e.toLowerCase().trim());
 
-    // 3) 접속 종료 날짜
+    // ===== 2) 접속 종료 날짜 (기간제) =====
     const END_DATE = new Date("2025-12-30T23:59:59+09:00");
 
-    // 4) 공통 DOM
-    const loginForm     = document.getElementById("login-form");
-    const loginMessage  = document.getElementById("login-message");
-    const loginCard     = document.getElementById("login-card");
-    const contentCard   = document.getElementById("content-card");
-    const expiredCard   = document.getElementById("expired-card");
+    // ===== 3) 공통 DOM =====
+    const loginForm    = document.getElementById("login-form");
+    const loginMessage = document.getElementById("login-message");
+    const loginCard    = document.getElementById("login-card");
+    const contentCard  = document.getElementById("content-card");
+    const expiredCard  = document.getElementById("expired-card");
 
-    const univResults       = document.getElementById("univ-results");
-    const groupButtons      = document.querySelectorAll("[data-group]");
-    const gunButtons        = document.querySelectorAll("[data-gun]");
-    const medButtons        = document.querySelectorAll("[data-med]");
-    const generalButtons    = document.querySelectorAll("[data-general]");
-    const medicalSubfilters = document.getElementById("medical-subfilters");
-    const generalSubfilters = document.getElementById("general-subfilters");
+    const gunButtons   = document.querySelectorAll("#gun-filters .btn-filter");
+    const gunTables    = document.querySelectorAll(".gun-table");
 
-    let currentGroup        = "all";
-    let currentGun          = "all";
-    let currentMedSub       = "all";
-    let currentGeneralTrack = "all";
-
-    // ========= 기간 만료 체크 =========
+    // ===== 4) 기간 만료 체크 =====
     function checkExpired() {
       const now = new Date();
       if (now > END_DATE) {
-        loginCard.style.display = "none";
+        loginCard.style.display   = "none";
         expiredCard.style.display = "block";
         contentCard.style.display = "none";
         return true;
@@ -1297,7 +416,7 @@
     }
     checkExpired();
 
-    // ========= 로그인 처리 =========
+    // ===== 5) 로그인 처리 =====
     if (loginForm) {
       loginForm.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -1323,149 +442,42 @@
 
         // 로그인 성공
         loginMessage.style.display = "none";
-        loginCard.style.display = "none";
-        contentCard.style.display = "block";
+        loginCard.style.display    = "none";
+        contentCard.style.display  = "block";
 
-        // 초기 필터 상태로 결과 표시
-        currentGroup        = "all";
-        currentGun          = "all";
-        currentMedSub       = "all";
-        currentGeneralTrack = "all";
-        medicalSubfilters.style.display = "none";
-        generalSubfilters.style.display = "none";
-
-        renderUnivResults(UNIVERSITY_DATA);
+        // 로그인 직후 기본으로 가군 표 보여주기
+        showGunTable("가군");
       });
     }
 
-    // ========= 필터 로직 =========
-    function filterUniversities() {
-      return UNIVERSITY_DATA.filter(univ => {
-        const category = univ.category || "";
-        const gun      = univ.gun || "";
-        const med      = univ.medDetail || "";
-        const track    = univ.track || "";
-
-        if (currentGroup === "medical" && category !== "메디컬") return false;
-        if (currentGroup === "general" && category !== "일반")   return false;
-        if (currentGroup === "teacher" && category !== "교대")   return false;
-
-        if (currentGun !== "all" && gun !== currentGun) return false;
-
-        if (currentGroup === "medical") {
-          if (currentMedSub !== "all" && med !== currentMedSub) return false;
-        }
-
-        if (currentGroup === "general") {
-          if (currentGeneralTrack !== "all" && track !== currentGeneralTrack) return false;
-        }
-
-        return true;
-      });
-    }
-
-    // 👉 이름 + 점핑 수치만 표시
-    function renderUnivResults(items) {
-      if (!univResults) return;
-      univResults.innerHTML = "";
-
-      if (!items.length) {
-        univResults.innerHTML = "<p class='info'>해당 조건에 맞는 데이터가 없습니다.</p>";
-        return;
-      }
-
-      const wrapper = document.createElement("div");
-
-      items.forEach(univ => {
-        const div = document.createElement("div");
-        div.className = "qa-item";
-
-        div.innerHTML = `
-          <h3>${univ.name}</h3>
-          <p><strong>점핑 수치:</strong> ${univ.number}</p>
-        `;
-
-        wrapper.appendChild(div);
-      });
-
-      univResults.appendChild(wrapper);
-    }
-
-    function applyFilter() {
-      const results = filterUniversities();
-      renderUnivResults(results);
-    }
-
-    // ========= 버튼 이벤트들 =========
-    groupButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        currentGroup = btn.dataset.group;
-
-        groupButtons.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-
-        if (currentGroup === "medical") {
-          medicalSubfilters.style.display = "block";
-          generalSubfilters.style.display = "none";
-          currentMedSub = "all";
-          medButtons.forEach(b => {
-            b.classList.remove("active");
-            if (b.dataset.med === "all") b.classList.add("active");
-          });
-        } else if (currentGroup === "general") {
-          generalSubfilters.style.display = "block";
-          medicalSubfilters.style.display = "none";
-          currentGeneralTrack = "all";
-          generalButtons.forEach(b => {
-            b.classList.remove("active");
-            if (b.dataset.general === "all") b.classList.add("active");
-          });
+    // ===== 6) 군별 표 표시 함수 =====
+    function showGunTable(gun) {
+      gunTables.forEach(div => {
+        if (div.dataset.gunTable === gun) {
+          div.style.display = "block";
         } else {
-          medicalSubfilters.style.display = "none";
-          generalSubfilters.style.display = "none";
+          div.style.display = "none";
         }
-
-        applyFilter();
       });
-    });
+    }
 
+    // ===== 7) 군 버튼 클릭 이벤트 =====
     gunButtons.forEach(btn => {
       btn.addEventListener("click", () => {
-        currentGun = btn.dataset.gun;
+        const gun = btn.dataset.gun;
 
+        // 버튼 active 상태 처리
         gunButtons.forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
 
-        applyFilter();
+        // 해당 군 표만 보여주기
+        showGunTable(gun);
       });
     });
 
-    medButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        currentMedSub = btn.dataset.med;
-
-        medButtons.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-
-        applyFilter();
-      });
-    });
-
-    generalButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        currentGeneralTrack = btn.dataset.general;
-
-        generalButtons.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-
-        applyFilter();
-      });
-    });
-
-    // 개발 테스트용으로 이 두 줄 잠깐 열어두면 로그인 없이도 바로 결과 확인 가능
-    // contentCard.style.display = "block";
-    // renderUnivResults(UNIVERSITY_DATA);
+    // 개발 테스트용: 로그인 생략하고 바로 표 보고 싶을 때는 아래 두 줄 잠깐 사용
+    // loginCard.style.display   = "none";
+    // contentCard.style.display = "block"; showGunTable("가군");
   </script>
 </body>
 </html>
-
