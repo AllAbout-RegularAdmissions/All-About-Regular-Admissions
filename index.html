@@ -6,13 +6,18 @@
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      max-width: 900px;
+      max-width: 800px;
       margin: 40px auto;
       padding: 0 16px;
       line-height: 1.5;
     }
     h1 {
       font-size: 24px;
+      margin-bottom: 8px;
+    }
+    h2 {
+      font-size: 20px;
+      margin-top: 24px;
       margin-bottom: 8px;
     }
     .card {
@@ -54,12 +59,12 @@
     .btn-filter {
       background: #e5e7eb;
       color: #374151;
-      margin-right: 8px;
+      margin-right: 6px;
       margin-bottom: 6px;
     }
     .btn-filter.active {
       background: #2563eb;
-      color: white;
+      color: #ffffff;
     }
     .error {
       color: #dc2626;
@@ -90,18 +95,16 @@
       color: #6b7280;
       margin-bottom: 8px;
     }
-
-    /* 표 스타일 */
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 24px;
+      margin-bottom: 12px;
+      font-size: 13px;
     }
     th, td {
       border: 1px solid #e5e7eb;
       padding: 6px 8px;
-      font-size: 13px;
-      text-align: center;
+      text-align: left;
     }
     th {
       background: #f3f4f6;
@@ -109,15 +112,14 @@
     }
     .gun-title {
       font-weight: 700;
-      margin-top: 12px;
-      margin-bottom: 6px;
+      margin: 16px 0 8px;
     }
     .track-title {
       font-weight: 600;
-      margin: 10px 0 4px 0;
+      margin: 8px 0;
     }
-    .gun-table {
-      display: none; /* JS로 제어 */
+    .filter-row {
+      margin-bottom: 8px;
     }
   </style>
 </head>
@@ -172,219 +174,892 @@
 
     <hr style="margin:24px 0;" />
 
-    <!-- ✅ 군 선택 + 표 섹션 -->
-    <section id="univ-table-section">
-      <h2>군별 대학 점핑 표 보기</h2>
+    <!-- ===================== 군/계열 선택 + 표 ===================== -->
+    <section id="jump-section">
+      <h2>군별 · 계열별 점핑 표</h2>
       <p class="info">
-        가군 / 나군 / 다군 중 하나를 선택하면, 해당 군의 표가 아래에 나타납니다.<br />
-        표 안에서 문과 / 이과 구분을 함께 볼 수 있습니다.
+        상단에서 <strong>가/나/다군</strong>과 <strong>문과/이과/통합</strong>을 선택하면
+        해당하는 표만 보여줍니다.
       </p>
 
-      <!-- 군 선택 버튼 -->
-      <div id="gun-filters" style="margin-bottom: 12px;">
-        <button type="button" class="btn-filter active" data-gun="가군">가군</button>
-        <button type="button" class="btn-filter" data-gun="나군">나군</button>
-        <button type="button" class="btn-filter" data-gun="다군">다군</button>
+      <!-- 군 선택 -->
+      <div class="filter-row">
+        <span class="info" style="margin-right:6px;">모집 군 선택:</span>
+        <button type="button" class="btn-filter active" data-gun-btn="가군">가군</button>
+        <button type="button" class="btn-filter" data-gun-btn="나군">나군</button>
+        <button type="button" class="btn-filter" data-gun-btn="다군">다군</button>
       </div>
 
-      <!-- 가군 표 -->
-      <div class="gun-table" data-gun-table="가군">
-        <div class="gun-title">[가군]</div>
-
-        <div class="track-title">문과</div>
-        <table>
-          <thead>
-            <tr>
-              <th>대학명 / 전형</th>
-              <th>계열</th>
-              <th>점핑 수치</th>
-              <th>비고</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- 👉 여기부터 가군/문과 데이터 행 추가 -->
-            <tr>
-              <td>고려대</td>
-              <td>문과</td>
-              <td>2.1</td>
-              <td>예시</td>
-            </tr>
-            <tr>
-              <td>고려대 (교과)</td>
-              <td>문과</td>
-              <td>2.4</td>
-              <td>예시</td>
-            </tr>
-            <tr>
-              <td>시립대</td>
-              <td>문과</td>
-              <td>1.4</td>
-              <td>예시</td>
-            </tr>
-            <!-- ⬆ 여기까지는 예시, 실제 데이터로 덮어쓰기 -->
-          </tbody>
-        </table>
-
-        <div class="track-title">이과</div>
-        <table>
-          <thead>
-            <tr>
-              <th>대학명 / 전형</th>
-              <th>계열</th>
-              <th>점핑 수치</th>
-              <th>비고</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- 👉 여기부터 가군/이과 데이터 행 추가 -->
-            <tr>
-              <td>고</td>
-              <td>이과</td>
-              <td>2.0</td>
-              <td>예시</td>
-            </tr>
-            <tr>
-              <td>고(교과)</td>
-              <td>이과</td>
-              <td>1.9</td>
-              <td>예시</td>
-            </tr>
-            <tr>
-              <td>연고대형과(50명 이상)</td>
-              <td>이과</td>
-              <td>2.2</td>
-              <td>예시</td>
-            </tr>
-            <!-- ⬆ 실제 데이터로 교체 -->
-          </tbody>
-        </table>
+      <!-- 계열 선택 -->
+      <div class="filter-row">
+        <span class="info" style="margin-right:6px;">계열 선택:</span>
+        <button type="button" class="btn-filter active" data-track-btn="문과">문과</button>
+        <button type="button" class="btn-filter" data-track-btn="이과">이과</button>
+        <button type="button" class="btn-filter" data-track-btn="통합">통합</button>
       </div>
 
-      <!-- 나군 표 -->
-      <div class="gun-table" data-gun-table="나군">
-        <div class="gun-title">[나군]</div>
+      <!-- ===== 군별 표 컨테이너 ===== -->
+      <div id="gun-tables-wrapper">
 
-        <div class="track-title">문과</div>
-        <table>
-          <thead>
-            <tr>
-              <th>대학명 / 전형</th>
-              <th>계열</th>
-              <th>점핑 수치</th>
-              <th>비고</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- 👉 여기부터 나군/문과 데이터 행 추가 -->
-            <tr>
-              <td>서울대 지균</td>
-              <td>문과</td>
-              <td>2.3</td>
-              <td>예시</td>
-            </tr>
-            <tr>
-              <td>서울대 일반</td>
-              <td>문과</td>
-              <td>2.3</td>
-              <td>예시</td>
-            </tr>
-            <tr>
-              <td>이화여자 대형</td>
-              <td>문과</td>
-              <td>1.54</td>
-              <td>예시</td>
-            </tr>
-            <!-- ⬆ 실제 데이터로 교체 -->
-          </tbody>
-        </table>
+        <!-- ===================== [가군] ===================== -->
+        <div class="gun-table" data-gun="가군">
+          <div class="gun-title">[가군]</div>
 
-        <div class="track-title">이과</div>
-        <table>
-          <thead>
-            <tr>
-              <th>대학명 / 전형</th>
-              <th>계열</th>
-              <th>점핑 수치</th>
-              <th>비고</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- 👉 여기부터 나군/이과 데이터 행 추가 -->
-            <tr>
-              <td>서울대 지균</td>
-              <td>이과</td>
-              <td>1.49</td>
-              <td>예시</td>
-            </tr>
-            <tr>
-              <td>서울대 일반</td>
-              <td>이과</td>
-              <td>2.6</td>
-              <td>예시</td>
-            </tr>
-            <tr>
-              <td>시립대</td>
-              <td>이과</td>
-              <td>1.45</td>
-              <td>예시</td>
-            </tr>
-            <!-- ⬆ 실제 데이터로 교체 -->
-          </tbody>
-        </table>
-      </div>
+          <!-- 가군 문과 -->
+          <div class="track-block" data-track="문과">
+            <div class="track-title">가군 · 문과</div>
 
-      <!-- 다군 표 (초기 예시만, 필요에 따라 채우기) -->
-      <div class="gun-table" data-gun-table="다군">
-        <div class="gun-title">[다군]</div>
+            <!-- 문과 표 1: 서연고/핵심 -->
+            <table>
+              <thead>
+                <tr>
+                  <th>대학명 / 전형</th>
+                  <th>계열</th>
+                  <th>점핑 수치</th>
+                  <th>비고</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- ✅ 가군 문과 주요(서연고 등) tr들 -->
+   <tr>
+  <td>고</td>
+  <td>문과</td>
+  <td>2.1</td>
+  <td></td>
+</tr>
+<tr>
+  <td>고(교과)</td>
+  <td>문과</td>
+  <td>2.4</td>
+  <td></td>
+</tr>
+<tr>
+  <td>시</td>
+  <td>문과</td>
+  <td>1.4</td>
+  <td></td>
+</tr>
 
-        <div class="track-title">문과</div>
-        <table>
-          <thead>
-            <tr>
-              <th>대학명 / 전형</th>
-              <th>계열</th>
-              <th>점핑 수치</th>
-              <th>비고</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- 👉 다군/문과 데이터가 있다면 여기에 추가 -->
-            <tr>
-              <td>예시대학 다군 문과</td>
-              <td>문과</td>
-              <td>2.0</td>
-              <td>예시</td>
-            </tr>
-          </tbody>
-        </table>
 
-        <div class="track-title">이과</div>
-        <table>
-          <thead>
-            <tr>
-              <th>대학명 / 전형</th>
-              <th>계열</th>
-              <th>점핑 수치</th>
-              <th>비고</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- 👉 다군/이과 데이터가 있다면 여기에 추가 -->
-            <tr>
-              <td>예시대학 다군 이과</td>
-              <td>이과</td>
-              <td>1.8</td>
-              <td>예시</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+
+              </tbody>
+            </table>
+
+            <!-- 문과 표 2: 추가 대학 -->
+            <table>
+              <thead>
+                <tr>
+                  <th>대학명 / 전형</th>
+                  <th>계열</th>
+                  <th>점핑 수치</th>
+                  <th>비고</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- ✅ 가군 문과 기타 대학 tr들 여기에 -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 가군 이과 -->
+          <div class="track-block" data-track="이과">
+            <div class="track-title">가군 · 이과</div>
+
+            <!-- 이과 표 1 -->
+            <table>
+              <thead>
+                <tr>
+                  <th>대학명 / 전형</th>
+                  <th>계열</th>
+                  <th>점핑 수치</th>
+                  <th>비고</th>
+                </tr>
+              </thead>
+              <tbody>
+                   <tr>
+  <td>연세 의치</td>
+  <td>이과</td>
+  <td>1.5</td>
+  <td></td>
+</tr>
+<tr>
+  <td>연세 약</td>
+  <td>이과</td>
+  <td>2</td>
+  <td></td>
+</tr>
+<tr>
+  <td>고려 의</td>
+  <td>이과</td>
+  <td>1.7</td>
+  <td></td>
+</tr>
+<tr>
+  <td>건국 수</td>
+  <td>이과</td>
+  <td>1.4</td>
+  <td></td>
+</tr>
+<tr>
+  <td>고</td>
+  <td>이과</td>
+  <td>2</td>
+  <td></td>
+</tr>
+<tr>
+  <td>고(교과)</td>
+  <td>이과</td>
+  <td>1.9</td>
+  <td></td>
+</tr>
+<tr>
+  <td>연고대형과(50명이상)</td>
+  <td>이과</td>
+  <td>2.2</td>
+  <td></td>
+</tr>
+<tr>
+  <td>이</td>
+  <td>이과</td>
+  <td>1.9</td>
+  <td></td>
+</tr>
+<tr>
+  <td>시</td>
+  <td>이과</td>
+  <td>1.5</td>
+  <td></td>
+</tr>
+<tr>
+  <td>건대형과(50명 이상-자전,전기)</td>
+  <td>이과</td>
+  <td>1.7</td>
+  <td></td>
+</tr>
+
+              </tbody>
+            </table>
+
+            <!-- 이과 표 2 -->
+            <table>
+              <thead>
+                <tr>
+                  <th>대학명 / 전형</th>
+                  <th>계열</th>
+                  <th>점핑 수치</th>
+                  <th>비고</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- ✅ 가군 이과 기타 대학 tr -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 가군 통합 -->
+          <div class="track-block" data-track="통합">
+            <div class="track-title">가군 · 통합</div>
+
+            <!-- 통합 표 1 -->
+            <table>
+              <thead>
+                <tr>
+                  <th>대학명 / 전형</th>
+                  <th>계열</th>
+                  <th>점핑 수치</th>
+                  <th>비고</th>
+                </tr>
+              </thead>
+              <tbody>
+       <tr>
+      <td>연세대 (문이)</td>
+      <td>통합</td>
+      <td>2.1</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>건국대 (문이)</td>
+      <td>통합</td>
+      <td>1.6</td>
+      <td></td>
+    </tr>
+
+              </tbody>
+            </table>
+
+            <!-- 통합 표 2 -->
+            <table>
+              <thead>
+                    <tr>
+  <td>한</td>
+  <td>통합</td>
+  <td>1.81</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>위의대학 대형과(50명이상)</td>
+  <td>통합</td>
+  <td>1.70</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>중</td>
+  <td>통합</td>
+  <td>1.74</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>경</td>
+  <td>통합</td>
+  <td>1.78</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>경국제</td>
+  <td>통합</td>
+  <td>2.58</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>동</td>
+  <td>통합</td>
+  <td>1.79</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>국숙숭단과기광</td>
+  <td>통합</td>
+  <td>2</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>위의 대학 대형과</td>
+  <td>통합</td>
+  <td>1.61</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>인</td>
+  <td>통합</td>
+  <td>1.60</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>수도권 및 지거국</td>
+  <td>통합</td>
+  <td>1.45</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>기타</td>
+  <td>통합</td>
+  <td>1.37</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>가군 수의대</td>
+  <td>통합</td>
+  <td>1.4</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>가군 한의대</td>
+  <td>통합</td>
+  <td>1.3</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>가군 치대</td>
+  <td>통합</td>
+  <td>1.42</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>가군 카울</td>
+  <td>통합</td>
+  <td>1.6</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>가군 상기 없는 의대</td>
+  <td>통합</td>
+  <td>1.3</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>가군 약대(성약제외)</td>
+  <td>통합</td>
+  <td>1.4</td>
+  <td></td>
+</tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===================== [나군] ===================== -->
+        <div class="gun-table" data-gun="나군">
+          <div class="gun-title">[나군]</div>
+
+          <!-- 나군 문과 -->
+          <div class="track-block" data-track="문과">
+            <div class="track-title">나군 · 문과</div>
+
+            <!-- 나군 문과 표 1 -->
+            <table>
+              <thead>
+                <tr>
+                  <th>대학명 / 전형</th>
+                  <th>계열</th>
+                  <th>점핑 수치</th>
+                  <th>비고</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- ✅ 나군 문과 주요 대학 tr -->
+                <tr>
+  <td>서울대 지균</td>
+  <td>문과</td>
+  <td>2.3</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>서울대 일반</td>
+  <td>문과</td>
+  <td>2.3</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>서울대 대형</td>
+  <td>문과</td>
+  <td>2.1</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>이 대형</td>
+  <td>문과</td>
+  <td>1.54</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>시</td>
+  <td>문과</td>
+  <td>1.5</td>
+  <td></td>
+</tr>
+              </tbody>
+            </table>
+
+            <!-- 나군 문과 표 2 -->
+            <table>
+              <thead>
+                <tr>
+                  <th>대학명 / 전형</th>
+                  <th>계열</th>
+                  <th>점핑 수치</th>
+                  <th>비고</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- ✅ 나군 문과 기타 대학 tr -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 나군 이과 -->
+          <div class="track-block" data-track="이과">
+            <div class="track-title">나군 · 이과</div>
+
+            <!-- 나군 이과 표 1 -->
+            <table>
+              <thead>
+                <tr>
+                  <th>대학명 / 전형</th>
+                  <th>계열</th>
+                  <th>점핑 수치</th>
+                  <th>비고</th>
+                </tr>
+              </thead>
+              <tbody>
+               <tr>
+  <td>서울대 지균</td>
+  <td>문과</td>
+  <td>2.3</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>서울대 일반</td>
+  <td>문과</td>
+  <td>2.3</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>서울대 대형</td>
+  <td>문과</td>
+  <td>2.1</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>이 대형</td>
+  <td>문과</td>
+  <td>1.54</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>시</td>
+  <td>문과</td>
+  <td>1.5</td>
+  <td></td>
+</tr>
+              </tbody>
+            </table>
+
+            <!-- 나군 이과 표 2 -->
+            <table>
+              <thead>
+                <tr>
+                  <th>대학명 / 전형</th>
+                  <th>계열</th>
+                  <th>점핑 수치</th>
+                  <th>비고</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- ✅ 나군 이과 기타 대학 tr -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 나군 통합 -->
+          <div class="track-block" data-track="통합">
+            <div class="track-title">나군 · 통합</div>
+
+            <!-- 나군 통합 표 1 -->
+            <table>
+              <thead>
+                <tr>
+                  <th>대학명 / 전형</th>
+                  <th>계열</th>
+                  <th>점핑 수치</th>
+                  <th>비고</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>이(문이)</td>
+                  <td>통합</td>
+                  <td>1.87</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>건(문이)</td>
+                  <td>통합</td>
+                  <td>1.83</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- 나군 통합 표 2 -->
+            <table>
+              <thead>
+                <tr>
+                  <th>대학명 / 전형</th>
+                  <th>계열</th>
+                  <th>점핑 수치</th>
+                  <th>비고</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+  <td>서한중(성제외)</td>
+  <td>통합</td>
+  <td>1.70</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>위의 대학 대형과 및 지거국</td>
+  <td>통합</td>
+  <td>1.63</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>외</td>
+  <td>통합</td>
+  <td>1.75</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>경 국제</td>
+  <td>통합</td>
+  <td>1.85</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>동</td>
+  <td>통합</td>
+  <td>1.67</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>국세단성신숭인아</td>
+  <td>통합</td>
+  <td>1.82</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>위의 대학 대형</td>
+  <td>통합</td>
+  <td>1.65</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>기타</td>
+  <td>통합</td>
+  <td>1.42</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>나군 수의대</td>
+  <td>통합</td>
+  <td>1.44</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>나군 한의대</td>
+  <td>통합</td>
+  <td>1.3</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>나군 치대</td>
+  <td>통합</td>
+  <td>1.35</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>나군 의대</td>
+  <td>통합</td>
+  <td>1.3</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>나군 약대</td>
+  <td>통합</td>
+  <td>1.4</td>
+  <td></td>
+</tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ===================== [다군] ===================== -->
+        <div class="gun-table" data-gun="다군">
+          <div class="gun-title">[다군]</div>
+
+          <!-- 다군 문과 -->
+          <div class="track-block" data-track="문과">
+            <div class="track-title">다군 · 문과</div>
+
+            <!-- 다군 문과 표 1 -->
+            <table>
+              <thead>
+                <tr>
+                  <th>대학명 / 전형</th>
+                  <th>계열</th>
+                  <th>점핑 수치</th>
+                  <th>비고</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- ✅ 다군 문과 주요 대학 tr -->
+                
+              </tbody>
+            </table>
+
+            <!-- 다군 문과 표 2 -->
+            <table>
+              <thead>
+                <tr>
+                  <th>대학명 / 전형</th>
+                  <th>계열</th>
+                  <th>점핑 수치</th>
+                  <th>비고</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- ✅ 다군 문과 기타 대학 tr -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 다군 이과 -->
+          <div class="track-block" data-track="이과">
+            <div class="track-title">다군 · 이과</div>
+
+            <!-- 다군 이과 표 1 -->
+            <table>
+              <thead>
+                <tr>
+                  <th>대학명 / 전형</th>
+                  <th>계열</th>
+                  <th>점핑 수치</th>
+                  <th>비고</th>
+                </tr>
+              </thead>
+              <tbody>
+  <tr>
+  <td>시</td>
+  <td>이과</td>
+  <td>1.46</td>
+  <td></td>
+</tr>
+              </tbody>
+            </table>
+
+            <!-- 다군 이과 표 2 -->
+            <table>
+              <thead>
+                <tr>
+                  <th>대학명 / 전형</th>
+                  <th>계열</th>
+                  <th>점핑 수치</th>
+                  <th>비고</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- ✅ 다군 이과 기타 대학 tr -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 다군 통합 -->
+          <div class="track-block" data-track="통합">
+            <div class="track-title">다군 · 통합</div>
+
+            <!-- 다군 통합 표 1 -->
+            <table>
+              <thead>
+                <tr>
+                  <th>대학명 / 전형</th>
+                  <th>계열</th>
+                  <th>점핑 수치</th>
+                  <th>비고</th>
+                </tr>
+              </thead>
+              <tbody>
+               <tr>
+  <td>고대(문이)</td>
+  <td>통합</td>
+  <td>1.28</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>건대(문이)</td>
+  <td>통합</td>
+  <td>1.47</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>이(문이)</td>
+  <td>통합</td>
+  <td>1.45</td>
+  <td></td>
+</tr>
+              </tbody>
+            </table>
+
+            <!-- 다군 통합 표 2 -->
+            <table>
+              <thead>
+                <tr>
+                  <th>대학명 / 전형</th>
+                  <th>계열</th>
+                  <th>점핑 수치</th>
+                  <th>비고</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+  <td>서한</td>
+  <td>통합</td>
+  <td>1.58</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>중외대서울</td>
+  <td>통합</td>
+  <td>1.46</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>동</td>
+  <td>통합</td>
+  <td>1.50</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>홍이과 (1.53)  통합</td>
+  <td>통합</td>
+  <td>(1.57)</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>광국단숭아인</td>
+  <td>통합</td>
+  <td>1.62</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>위의 대학 대형</td>
+  <td>통합</td>
+  <td>1.46</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>서울 경기 기타</td>
+  <td>통합</td>
+  <td>1.34</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>수도권여대</td>
+  <td>통합</td>
+  <td>1.68</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>기타</td>
+  <td>통합</td>
+  <td>1.35</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>다군 치한수</td>
+  <td>통합</td>
+  <td>1.35</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>다군 약</td>
+  <td>통합</td>
+  <td>1.4</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>다군 순천향</td>
+  <td>통합</td>
+  <td>1.3</td>
+  <td></td>
+</tr>
+
+<tr>
+  <td>다군 상기 없는 의대</td>
+  <td>통합</td>
+  <td>1.35</td>
+  <td></td>
+</tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div> <!-- /gun-tables-wrapper -->
+    </section>
+
+    <hr style="margin:24px 0;" />
+
+    <!-- ===================== 교대 계열 ===================== -->
+    <section id="teacher-section">
+      <h2>교대 계열 점핑 표</h2>
+      <p class="info">
+        교대 계열은 군 구분 없이 한 눈에 볼 수 있도록 정리했습니다.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>대학명 / 전형</th>
+            <th>지역</th>
+            <th>점핑 수치</th>
+            <th>비고</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- ✅ 실제 교대 데이터로 교체 -->
+          <tr>
+            <td>서울교대</td>
+            <td>서울</td>
+            <td>2.0</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>경인교대</td>
+            <td>경기/인천</td>
+            <td>2.2</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
     </section>
   </div>
 
+  <!-- ===================== 스크립트 ===================== -->
   <script>
-    // ===== 1) 허용 이메일 목록 (실제 이메일로 교체해서 사용) =====
-    const ALLOWED_EMAILS = ["what2z@naver.com",
+  document.addEventListener("DOMContentLoaded", function () {
+    // ---------- 1) 이메일 / 기간 설정 ----------
+    const ALLOWED_EMAILS = [
+     "what2z@naver.com",
 "avushen@naver.com",
   "sj730426@naver.com",
   "nexty@naver.com",
@@ -1175,23 +1850,16 @@
   "edithjins@gmail.com",
   "mhnkm@naver.com",  
 
-     
     ].map(e => e.toLowerCase().trim());
 
-    // ===== 2) 접속 종료 날짜 (기간제) =====
     const END_DATE = new Date("2025-12-30T23:59:59+09:00");
 
-    // ===== 3) 공통 DOM =====
-    const loginForm    = document.getElementById("login-form");
-    const loginMessage = document.getElementById("login-message");
-    const loginCard    = document.getElementById("login-card");
-    const contentCard  = document.getElementById("content-card");
-    const expiredCard  = document.getElementById("expired-card");
+    const loginCard   = document.getElementById("login-card");
+    const loginForm   = document.getElementById("login-form");
+    const loginMsg    = document.getElementById("login-message");
+    const contentCard = document.getElementById("content-card");
+    const expiredCard = document.getElementById("expired-card");
 
-    const gunButtons   = document.querySelectorAll("#gun-filters .btn-filter");
-    const gunTables    = document.querySelectorAll(".gun-table");
-
-    // ===== 4) 기간 만료 체크 =====
     function checkExpired() {
       const now = new Date();
       if (now > END_DATE) {
@@ -1202,9 +1870,57 @@
       }
       return false;
     }
+
     checkExpired();
 
-    // ===== 5) 로그인 처리 =====
+    // ---------- 2) 군/계열 필터 ----------
+    const gunButtons   = document.querySelectorAll("[data-gun-btn]");
+    const trackButtons = document.querySelectorAll("[data-track-btn]");
+    const gunTables    = document.querySelectorAll(".gun-table");
+
+    let currentGun   = gunButtons.length   ? gunButtons[0].dataset.gunBtn     : "가군";
+    let currentTrack = trackButtons.length ? trackButtons[0].dataset.trackBtn : "문과";
+
+    function updateTables() {
+      gunTables.forEach(table => {
+        const gun = table.dataset.gun;
+        if (gun === currentGun) {
+          table.style.display = "block";
+
+          const blocks = table.querySelectorAll(".track-block");
+          blocks.forEach(block => {
+            const track = block.dataset.track;
+            if (track === currentTrack) {
+              block.style.display = "block";
+            } else {
+              block.style.display = "none";
+            }
+          });
+        } else {
+          table.style.display = "none";
+        }
+      });
+    }
+
+    gunButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        currentGun = btn.dataset.gunBtn;
+        gunButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        updateTables();
+      });
+    });
+
+    trackButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        currentTrack = btn.dataset.trackBtn;
+        trackButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        updateTables();
+      });
+    });
+
+    // ---------- 3) 로그인 처리 ----------
     if (loginForm) {
       loginForm.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -1215,57 +1931,33 @@
         const email = emailInput.value.toLowerCase().trim();
 
         if (!email) {
-          loginMessage.textContent = "이메일을 입력해 주세요.";
-          loginMessage.style.display = "block";
+          loginMsg.textContent = "이메일을 입력해 주세요.";
+          loginMsg.style.display = "block";
           return;
         }
 
-        const allowed = ALLOWED_EMAILS.includes(email);
-
-        if (!allowed) {
-          loginMessage.textContent = "접근 권한이 없는 이메일입니다.";
-          loginMessage.style.display = "block";
+        if (!ALLOWED_EMAILS.includes(email)) {
+          loginMsg.textContent = "접근 권한이 없는 이메일입니다.";
+          loginMsg.style.display = "block";
           return;
         }
 
         // 로그인 성공
-        loginMessage.style.display = "none";
-        loginCard.style.display    = "none";
-        contentCard.style.display  = "block";
+        loginMsg.style.display = "none";
+        loginCard.style.display = "none";
+        contentCard.style.display = "block";
 
-        // 로그인 직후 기본으로 가군 표 보여주기
-        showGunTable("가군");
+        // 로그인 직후 현재 선택된 군/계열에 맞춰 표 표시
+        updateTables();
       });
     }
 
-    // ===== 6) 군별 표 표시 함수 =====
-    function showGunTable(gun) {
-      gunTables.forEach(div => {
-        if (div.dataset.gunTable === gun) {
-          div.style.display = "block";
-        } else {
-          div.style.display = "none";
-        }
-      });
-    }
-
-    // ===== 7) 군 버튼 클릭 이벤트 =====
-    gunButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        const gun = btn.dataset.gun;
-
-        // 버튼 active 상태 처리
-        gunButtons.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-
-        // 해당 군 표만 보여주기
-        showGunTable(gun);
-      });
-    });
-
-    // 개발 테스트용: 로그인 생략하고 바로 표 보고 싶을 때는 아래 두 줄 잠깐 사용
-    // loginCard.style.display   = "none";
-    // contentCard.style.display = "block"; showGunTable("가군");
+    // ---------- (개발 테스트용) ----------
+    // 로그인 없이 바로 표 확인하고 싶으면 아래 두 줄 잠깐 풀었다가,
+    // 배포할 때 다시 주석 처리하면 된다.
+    // contentCard.style.display = "block";
+    // updateTables();
+  });
   </script>
 </body>
 </html>
